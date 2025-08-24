@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from "../models/user.js"
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken'
 
 export const register = async (req,res,next) =>{
      try {
@@ -69,7 +70,9 @@ export const login = async(req,res,next)=>{
     })
 
     res.status(200).send({
-      message: "Login successfully"
+      message: "Login successfully",
+      token,
+      isAdmin: user.isAdmin
     })
 
   }catch(err){

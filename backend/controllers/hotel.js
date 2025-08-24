@@ -1,3 +1,5 @@
+import Hotel from "../models/hotel.js"
+
 
 // creating hotel
 export const createHotel = async(req,res,next) =>{
@@ -52,8 +54,10 @@ export const getHotel = async(req,res,next) =>{
    
       
     try {
-        const savedHotel = await newHotel.save();
-        res.status(200).json(savedHotel);
+        const Hotel = await Hotel.findById(
+            req.params.id
+        );
+        res.status(200).json(Hotel);
     } catch (err) {
         next(err);
     }
