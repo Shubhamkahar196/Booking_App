@@ -69,9 +69,17 @@ export const login = async(req,res,next)=>{
       expiresIn: "1d",
     })
 
+    // Set token as HTTP-only cookie for security
+    res.cookie("access_token", token, {
+      httpOnly: true, // Prevents JavaScript access to the cookie
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      sameSite: "strict", // Prevents CSRF attacks
+      maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+    });
+
     res.status(200).send({
       message: "Login successfully",
-      token,
+      token, 
       isAdmin: user.isAdmin
     })
 

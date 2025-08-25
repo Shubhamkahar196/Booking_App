@@ -1,33 +1,29 @@
 import express from 'express';
 import { getUser, updateUser, deleteUser } from '../controllers/user.js';
-import { verifyToken } from '../utils/verifyTokens.js';
-import jwt from 'jsonwebtoken'
+import { verifyAdmin, verifyToken, verifyUser } from '../utils/verifyTokens.js';
+
 
 const router = express.Router();
 
-router.get("/checkauthentication", verifyToken,(req,res,next)=>{
-    res.status(200).json({
-        messsage: "Hello user, you are logged in"
-    });
-})
+
 
 
 
 // update
-router.put("/:id", updateUser);
+router.put("/:id", verifyUser,updateUser);
 
 // delete
 
-router.delete("/:id", deleteUser) 
+router.delete("/:id",verifyUser ,deleteUser) 
 
 
 // get by id
 
-router.get("/:id",getUser)
+router.get("/:id",verifyUser,getUser)
 
 // get all
 
-router.get("/",getUser);
+router.get("/",verifyAdmin,getUser);
 
 
 export default router
