@@ -1,10 +1,18 @@
 import express from 'express';
-import { login, register } from '../controllers/auth.js';
+import { login, register, logout, getSession } from '../controllers/auth.js';
 
 const router = express.Router();
 
-router.post("/register",register)
-router.post("/login",login)
+// Register a new user
+router.post("/register", register);
 
+// Login user
+router.post("/login", login);
 
-export default router
+// Logout user (clears the cookie)
+router.post("/logout", logout);
+
+// Check session (is user logged in?)
+router.get("/session", getSession);
+
+export default router;

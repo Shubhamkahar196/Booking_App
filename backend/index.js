@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from "cors";
 
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser'; // Im
@@ -17,6 +18,10 @@ connectDB();
 
 
 // middleware
+app.use(cors({
+  origin: "http://localhost:5173", // your frontend URL
+  credentials: true // if you need cookies/auth headers
+}));
 app.use(express.json());
 app.use(cookieParser()); // Use cookie-parser middleware to parse cookies
 
