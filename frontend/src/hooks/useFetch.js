@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 // // This is a minimal React component structure to demonstrate the custom hooks.
 // // In a real application, you would separate concerns into multiple components.
@@ -213,7 +213,7 @@ function useFetch(url) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -228,11 +228,11 @@ function useFetch(url) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [url]);
 
   useEffect(() => {
     fetchData();
-  }, [url]);
+  }, [fetchData]);
 
   return { data, loading, error, refetch: fetchData };
 }

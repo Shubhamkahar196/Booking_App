@@ -8,6 +8,7 @@ import authRoute from './routes/auth.js'
 import userRoute from './routes/users.js';
 import hotelRoute from './routes/hotels.js';
 import roomRoute from './routes/rooms.js';
+import adminRoute from './routes/admin.js';
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/hotels",hotelRoute)
 app.use("/api/v1/users",userRoute)
 app.use("/api/v1/rooms",roomRoute)
+app.use("/api/v1/admin",adminRoute)
 
 app.use((err,req,res,next)=>{
 
@@ -40,8 +42,6 @@ app.use((err,req,res,next)=>{
     message: errorMessage,
     stack: err.stack,
   })
-
-  return res.status(500).json("Hello error from handler")
 })
 
 app.listen(process.env.PORT, () => {

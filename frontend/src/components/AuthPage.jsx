@@ -33,7 +33,7 @@ const Auth = ({ mode = "login", theme, onLoginSuccess }) => {
           onLoginSuccess(user);
           navigate("/");
         }
-      } catch (err) {
+      } catch {
         // user not logged in, do nothing
       }
     };

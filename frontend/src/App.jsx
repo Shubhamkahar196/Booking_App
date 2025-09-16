@@ -8,12 +8,14 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 export default function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
   const [searchTerm, setSearchTerm] = useState("");
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(null); // null = checking session
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const { data: hotels, loading, error } = useFetch("http://localhost:8000/api/v1/hotels");
 
@@ -43,17 +45,26 @@ export default function App() {
           method: "GET",
           credentials: "include",
         });
-        setIsLoggedIn(res.ok);
-      } catch (err) {
+        if (res.ok) {
+          const user = await res.json();
+          setIsLoggedIn(true);
+          setIsAdmin(user.isAdmin || false);
+        } else {
+          setIsLoggedIn(false);
+          setIsAdmin(false);
+        }
+      } catch {
         setIsLoggedIn(false);
+        setIsAdmin(false);
       }
     };
     checkSession();
   }, []);
 
   // Handle login success
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (user) => {
     setIsLoggedIn(true);
+    setIsAdmin(user.isAdmin || false);
   };
 
   // Handle logout
@@ -64,6 +75,7 @@ export default function App() {
         credentials: "include",
       });
       setIsLoggedIn(false);
+      setIsAdmin(false);
     } catch (err) {
       console.error(err);
     }
@@ -84,6 +96,7 @@ export default function App() {
           theme={theme}
           toggleTheme={toggleTheme}
           isLoggedIn={isLoggedIn}
+          isAdmin={isAdmin}
           handleLogout={handleLogout}
         />
 
@@ -132,6 +145,12 @@ export default function App() {
               path="/auth/signup"
               element={
                 isLoggedIn ? <Navigate to="/" /> : <SignupPage theme={theme} onLoginSuccess={handleLoginSuccess} />
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                isAdmin ? <AdminDashboard theme={theme} /> : <Navigate to="/" />
               }
             />
           </Routes>

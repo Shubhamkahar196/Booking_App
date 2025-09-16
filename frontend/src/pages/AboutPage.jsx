@@ -11,7 +11,7 @@ function AboutPage({ theme }) {
         </p>
 
         <h2 className="text-2xl font-bold mb-4">About Me</h2>
-        <p className="text-lg mb-4">
+        {/* <p className="text-lg mb-4">
           Hi! I'm <span className="font-semibold">Shiva</span>. I'm the developer behind this app. I love creating user-friendly and modern web applications that solve real problems.
         </p>
 
@@ -25,7 +25,7 @@ function AboutPage({ theme }) {
           >
             <Instagram size={20} className="mr-1" /> @shivamsinghamrajput
           </a>
-        </p>
+        </p> */}
 
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4">Features</h2>

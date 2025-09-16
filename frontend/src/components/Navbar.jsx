@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Moon, Sun, Menu, X, LogOut } from "lucide-react";
 
-function Navbar({ theme, toggleTheme, isLoggedIn, handleLogout }) {
+function Navbar({ theme, toggleTheme, isLoggedIn, isAdmin, handleLogout }) {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -22,6 +22,7 @@ function Navbar({ theme, toggleTheme, isLoggedIn, handleLogout }) {
           <button onClick={() => navigate("/")} className={linkClass}>Home</button>
           <button onClick={() => navigate("/about")} className={linkClass}>About</button>
           <button onClick={() => navigate("/contact")} className={linkClass}>Contact</button>
+          {isAdmin && <button onClick={() => navigate("/admin")} className={linkClass}>Admin</button>}
 
           {isLoggedIn ? (
             <button
@@ -80,6 +81,7 @@ function Navbar({ theme, toggleTheme, isLoggedIn, handleLogout }) {
             <button onClick={() => { navigate("/"); setIsMenuOpen(false); }} className={linkClass}>Home</button>
             <button onClick={() => { navigate("/about"); setIsMenuOpen(false); }} className={linkClass}>About</button>
             <button onClick={() => { navigate("/contact"); setIsMenuOpen(false); }} className={linkClass}>Contact</button>
+            {isAdmin && <button onClick={() => { navigate("/admin"); setIsMenuOpen(false); }} className={linkClass}>Admin</button>}
 
             {isLoggedIn ? (
               <button
